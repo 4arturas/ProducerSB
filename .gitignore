@@ -59,7 +59,6 @@ Thumbs.db
 *.cache
 *.png
 .asciidoctor
-*.html
 *.pdf
 
 HELP.md
