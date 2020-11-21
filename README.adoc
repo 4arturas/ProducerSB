@@ -55,6 +55,9 @@ docker run -p 8080:8080 arturix/producersb:latest
 
 http://192.168.56.10:8080/
 
+== Bitbucket Pipeline
+https://bitbucket.org/arturix/producersb/addon/pipelines/home#!/
+
 == Run on K8s
 [source]
 kubectl apply -f producer.yaml
