@@ -1,8 +1,8 @@
 Install image locally
 [source]
-docker build -t springbootappci:1.0 .
+docker build -t producersb:1.0 .
 docker images
-docker run -p 8080:8080 springbootappci:1.0
+docker run -p 8080:8080 producersb:1.0
 
 http://192.168.56.10:8080/greeting
 
@@ -11,4 +11,4 @@ Remove image
 docker image rm --force 7a6f09a29ede
 
 [source]
-docker run -p 8080:8080 arturix/springbootappci:latest
+docker run -p 8080:8080 arturix/producersb:latest
