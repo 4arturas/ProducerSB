@@ -1,4 +1,43 @@
-Install image locally
+= Producer
+v1.0, 2020-11-14
+:toc:
+:example-caption!:
+:sectnums:
+:sectnumlevels: 7
+:icons: font
+:source-highlighter: prettify
+
+== Test java11 in docker image
+[source]
+----
+cat >>Hello.java<<EOF
+class Hello
+{
+    public static void main (String args[])
+    {
+        System.out.println("java 11 ok");
+    }
+}
+EOF
+----
+[source]
+----
+cat >>Dockerfile<<EOF
+FROM openjdk:11
+COPY . /usr/src/myapp
+WORKDIR /usr/src/myapp
+RUN javac Hello.java
+CMD ["java", "Hello"]
+EOF
+----
+[source]
+docker build -t img-java-example .
+
+[source]
+docker run -it --rm img-java-example
+
+== Install image locally
+
 [source]
 docker build -t producersb:1.0 .
 docker images
@@ -6,9 +45,11 @@ docker run -p 8080:8080 producersb:1.0
 
 http://192.168.56.10:8080/greeting
 
-Remove image
+== Remove image from local docker
 [source]
 docker image rm --force 7a6f09a29ede
 
+== Install docker image from link:https://hub.docker.com/repository/docker/arturix/producersb[docker hub]
 [source]
 docker run -p 8080:8080 arturix/producersb:latest
+
