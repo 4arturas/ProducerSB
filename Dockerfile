@@ -1,4 +1,4 @@
-FROM openjdk:11
+FROM adoptopenjdk/openjdk11:alpine
 
 ADD target/demo-0.0.1-SNAPSHOT.jar ProducerSB.jar
 
