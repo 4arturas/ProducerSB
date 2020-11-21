@@ -14,8 +14,13 @@ pipelines:
           name: Build and Test
           caches:
             - maven
+            - docker
           script:
             - mvn -B verify --file pom.xml
+          artifacts:
+            - target/**
+          services:
+            - docker
           after-script:
               # Collect checkstyle results, if any, and convert to Bitbucket Code Insights.
             - pipe: atlassian/checkstyle-report:0.2.0
@@ -25,7 +30,19 @@ pipelines:
             # Run a security scan for sensitive data.
             # See more security tools at https://bitbucket.org/product/features/pipelines/integrations?&category=security
             - pipe: atlassian/git-secrets-scan:0.4.3
+      - step:
+          name: Docker deploy
+          caches:
+            - maven
+            - docker
+          script:
             - export IMAGE_NAME=arturix/producersb:$BITBUCKET_COMMIT
-            - docker build -t $IMAGE_NAME .
+            - mvn package -DskipTests && docker build . -t $IMAGE_NAME
             - docker login --username $DOCKER_USER --password $DOCKER_PASSWORD
             - docker push $IMAGE_NAME
+          services:
+            - docker
+definitions:
+  catches:
+    maven: ~/.m2/repository
+
