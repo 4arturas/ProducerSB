@@ -26,6 +26,6 @@ pipelines:
             # See more security tools at https://bitbucket.org/product/features/pipelines/integrations?&category=security
             - pipe: atlassian/git-secrets-scan:0.4.3
             - export IMAGE_NAME=arturix/producersb
-            - docker build -t $IMAGE_NAME .
+            - docker build -t arturix/producersb .
             - docker login --username $DOCKER_USER --password $DOCKER_PASSWORD
             - docker push $IMAGE_NAME
