@@ -36,7 +36,7 @@ pipelines:
             - maven
             - docker
           script:
-            - export IMAGE_NAME=arturix/producersb:$BITBUCKET_COMMIT
+            - export IMAGE_NAME=arturix/producersb:latest
             - mvn package -DskipTests
             - docker build . -t $IMAGE_NAME
             - docker login --username $DOCKER_USER --password $DOCKER_PASSWORD
