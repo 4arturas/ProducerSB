@@ -48,3 +48,18 @@ Thumbs.db
 *.mov
 *.wmv
 
+#############
+.idea
+*.iml
+*target
+# Terraform
+.terraform
+*.info
+*.tfstate
+*.backup
+
+*.cache
+*.png
+.asciidoctor
+*.html
+
