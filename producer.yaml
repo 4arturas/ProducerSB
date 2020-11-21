@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: producer-app
-          image: arturix/producersb:labest
+          image: arturix/producersb:latest
           ports:
             - containerPort: 80
 ---
