@@ -53,3 +53,5 @@ docker image rm --force 7a6f09a29ede
 [source]
 docker run -p 8080:8080 arturix/producersb:latest
 
+http://192.168.56.10:8080/
+
