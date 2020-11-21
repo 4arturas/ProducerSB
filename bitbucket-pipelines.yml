@@ -42,7 +42,7 @@ pipelines:
             - docker push $IMAGE_NAME
           services:
             - docker
-definitions:
-  catches:
-    maven: ~/.m2/repository
+#definitions:
+#  catches:
+#    maven: ~/.m2/repository
 
