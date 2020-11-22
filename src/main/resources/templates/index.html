@@ -5,6 +5,12 @@
     <title>Hello Docker + Spring Boot</title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
+<style>
+    .msgStyle {
+        margin-bottom: 5px;
+        font-size: 20px;
+    }
+</style>
 <body>
 
 <h1 th:text="${title}">Default title.</h1>
@@ -22,14 +28,15 @@
         {
             var msgProducer = document.getElementById('msgProducer');
             var divMsg = document.createElement('div');
-            divMsg.innerHTML = '#' + (g_MsgNr++) + ' - SpringBoot received message = \"' + response.data + '\"';
+            divMsg.className = 'msgStyle';
+            divMsg.innerHTML = '#' + (g_MsgNr++) + ' - SpringBoot received message = <b>\"' + response.data + '\"</b> and send it to Kafka';
             msgProducer.appendChild( divMsg );
             setTimeout(
                 function()
                 {
                     var span = document.createElement('span');
                     span.style.color = 'red';
-                    span.innerHTML = '&nbsp;(preparing to delete this message from UI)';
+                    span.innerHTML = '&nbsp;(deleting this message from UI)';
                     divMsg.appendChild( span );
                 }, 2000 );
             setTimeout(
@@ -48,7 +55,7 @@
 
 <input id="inputProducer" type="text" value="Message for Consumer">
 <button id="buttonProducer" onclick="produce();">Produce</button>
-<div id="msgProducer"></div>
+<div id="msgProducer" style="margin: 20px 0 0 20px"></div>
 </body>
 
 </html>
