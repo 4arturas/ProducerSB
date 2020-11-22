@@ -16,7 +16,7 @@
 <h1 th:text="${title}">Default title.</h1>
 
 <script type="text/javascript">
-    var g_MsgNr = 1;
+    var g_nMsgNr = 1;
     function produce()
     {
         var inputProducer = document.getElementById('inputProducer');
@@ -29,7 +29,7 @@
             var msgProducer = document.getElementById('msgProducer');
             var divMsg = document.createElement('div');
             divMsg.className = 'msgStyle';
-            divMsg.innerHTML = '#' + (g_MsgNr++) + ' - SpringBoot received message = <b>\"' + response.data + '\"</b> and send it to Kafka';
+            divMsg.innerHTML = '#' + (g_nMsgNr++) + ' - SpringBoot received message = <b>\"' + response.data + '\"</b> and send it to Kafka';
             msgProducer.appendChild( divMsg );
             setTimeout(
                 function()
