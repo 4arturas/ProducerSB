@@ -27,6 +27,6 @@ public class ProduceController
     public String produce( @PathVariable String msg )
     {
         sendMesage( msg );
-        return "received " + msg;
+        return msg;
     }
 }
