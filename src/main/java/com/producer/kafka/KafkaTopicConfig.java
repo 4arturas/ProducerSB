@@ -9,14 +9,17 @@ import org.springframework.kafka.core.KafkaAdmin;
 
 import java.util.HashMap;
 import java.util.Map;
+
 @Configuration
-public class KafkaTopicConfig {
+public class KafkaTopicConfig
+{
 
     @Value(value = "${kafka.bootstrapAddress}")
     private String bootstrapAddress;
 
     @Bean
-    public KafkaAdmin kafkaAdmin() {
+    public KafkaAdmin kafkaAdmin()
+    {
         Map<String, Object> configs = new HashMap<>();
         configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         return new KafkaAdmin(configs);
