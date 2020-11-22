@@ -22,10 +22,12 @@ public class KafkaTopicConfig {
         return new KafkaAdmin(configs);
     }
 
+    @Value(value = "${kafka.topic.example-topic}")
+    private String topicExampleTopic;
     @Bean
     public NewTopic topic1()
     {
-        final String topic = "example-topic";
+        final String topic = topicExampleTopic;
         return new NewTopic(topic, 1, (short) 1);
     }
 }

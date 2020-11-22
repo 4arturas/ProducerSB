@@ -2,6 +2,7 @@ package com.producer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -29,29 +30,35 @@ public class ProducerApp {
 	@Autowired
 	private KafkaTemplate<String, String> kafkaTemplate;
 
+	@Value( value = "${kafka.topic.example-topic}")
+	private String topicExampleTopic;
+
 	public void sendMessageSimple(String msg)
 	{
-		final String topicName = "example-topic";
+		final String topicName = topicExampleTopic;
 		kafkaTemplate.send(topicName, msg);
 	}
 
-	public void sendMessage(String message) {
+	public void sendMessage( final String message )
+	{
 
-		final String topicName = "example-topic";
-		ListenableFuture<SendResult<String, String>> future =
-				kafkaTemplate.send(topicName, message);
+		final String topicName = topicExampleTopic;
+		ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topicName, message);
 
-		future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
+		future.addCallback(new ListenableFutureCallback<SendResult<String, String>>()
+		{
 
 			@Override
-			public void onSuccess(SendResult<String, String> result) {
-				log.info("Sent message=[" + message +
-						"] with offset=[" + result.getRecordMetadata().offset() + "]");
+			public void onSuccess(SendResult<String, String> result)
+			{
+				final String info = String.format("Sent message=[%s] with offset=[%s]", message, result.getRecordMetadata().offset() );
+				log.info( info );
 			}
 			@Override
-			public void onFailure(Throwable ex) {
-				log.info("Unable to send message=["
-						+ message + "] due to : " + ex.getMessage());
+			public void onFailure(Throwable ex)
+			{
+				final String info = String.format( "Unable to send message=[%s] due to : %s", message, ex.getMessage() );
+				log.info( info );
 			}
 		});
 	}
