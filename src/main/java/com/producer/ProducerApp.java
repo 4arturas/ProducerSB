@@ -17,8 +17,7 @@ public class ProducerApp
 	@GetMapping("/")
 	public String index(final Model model)
 	{
-		model.addAttribute("title", "Producer: Docker + Spring Boot");
-		model.addAttribute("msg", "Welcome to the docker container!");
+		model.addAttribute("title", "Producer: Docker + Spring Boot + Kafka + Axios");
 		return "index";
 	}
 
