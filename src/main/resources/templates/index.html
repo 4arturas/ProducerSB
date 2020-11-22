@@ -6,10 +6,11 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
+
 <h1 th:text="${title}">Default title.</h1>
-<p th:text="${msg}">Default text.</p>
 
 <script type="text/javascript">
+    var g_MsgNr = 1;
     function produce()
     {
         var inputProducer = document.getElementById('inputProducer');
@@ -17,31 +18,37 @@
             method: 'get',
             url: '/produce/' + inputProducer.value
         })
-        .then(function (response){
-            console.log(response.data);
-            // console.log(response);
+        .then(function (response)
+        {
+            var msgProducer = document.getElementById('msgProducer');
+            var divMsg = document.createElement('div');
+            divMsg.innerHTML = '#' + (g_MsgNr++) + ' - SpringBoot received message = \"' + response.data + '\"';
+            msgProducer.appendChild( divMsg );
+            setTimeout(
+                function()
+                {
+                    var span = document.createElement('span');
+                    span.style.color = 'red';
+                    span.innerHTML = '&nbsp;(preparing to delete this message from UI)';
+                    divMsg.appendChild( span );
+                }, 2000 );
+            setTimeout(
+                function()
+                {
+                    divMsg.parentNode.removeChild( divMsg );
+                }, 4000 );
         })
-        .catch(function (error){
+        .catch(function (error)
+        {
             console.log(error);
         });
     }
 
-    // Make a Post Request
-    /*
-    axios({
-        method: 'post',
-        url: '/login',
-        data: {
-            firstName: 'demo',
-            lastName: 'user'
-        }
-    });
-    */
 </script>
 
-<input id="inputProducer" type="text">
+<input id="inputProducer" type="text" value="Message for Consumer">
 <button id="buttonProducer" onclick="produce();">Produce</button>
-
+<div id="msgProducer"></div>
 </body>
 
 </html>
