@@ -3,12 +3,44 @@
 <head>
     <meta charset="utf-8">
     <title>Hello Docker + Spring Boot</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
-Test 1
 <h1 th:text="${title}">Default title.</h1>
 <p th:text="${msg}">Default text.</p>
 
+<script type="text/javascript">
+    function produce()
+    {
+        var inputProducer = document.getElementById('inputProducer');
+        axios({
+            method: 'get',
+            url: '/produce/' + inputProducer.value
+        })
+        .then(function (response){
+            console.log(response.data);
+            // console.log(response);
+        })
+        .catch(function (error){
+            console.log(error);
+        });
+    }
+
+    // Make a Post Request
+    /*
+    axios({
+        method: 'post',
+        url: '/login',
+        data: {
+            firstName: 'demo',
+            lastName: 'user'
+        }
+    });
+    */
+</script>
+
+<input id="inputProducer" type="text">
+<button id="buttonProducer" onclick="produce();">Produce</button>
 
 </body>
 
