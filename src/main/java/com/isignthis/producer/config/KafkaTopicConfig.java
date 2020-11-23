@@ -1,4 +1,4 @@
-package com.producer.kafka;
+package com.isignthis.producer.config;
 
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;

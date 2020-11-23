@@ -1,4 +1,4 @@
-package com.producer;
+package com.isignthis.producer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
