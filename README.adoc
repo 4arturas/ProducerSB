@@ -55,6 +55,27 @@ docker run -p 8080:8080 arturix/producersb:latest
 
 http://192.168.56.10:8080/
 
+== Kafka
+=== Install
+==== Docker
+https://kafka-tutorials.confluent.io/kafka-console-consumer-producer-basics/kafka.html
+
+NOTE: Machine address 192.168.56.13
+
+.config-files/kafka/docker-compose.yml
+include::config-files/kafka/docker-compose.yml[]
+[source]
+docker-compose up -d
+
+==== Test on windows
+===== Producer
+[source]
+D:\kafka_2.13-2.6.0\bin\windows\kafka-console-producer --topic example-topic --bootstrap-server 192.168.56.13:29092
+
+===== Consumer
+[source]
+D:\kafka_2.13-2.6.0\bin\windows\kafka-console-consumer --topic example-topic --bootstrap-server 192.168.56.13:29092
+
 == Bitbucket Pipeline
 https://bitbucket.org/arturix/producersb/addon/pipelines/home#!/
 
@@ -62,71 +83,27 @@ https://bitbucket.org/arturix/producersb/addon/pipelines/home#!/
 [source]
 kubectl apply -f producer.yaml
 
-== Install Kafka
-
-[source]
-helm repo add bitnami https://charts.bitnami.com/bitnami
-export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-
-* link:https://docs.bitnami.com/tutorials/deploy-scalable-kafka-zookeeper-cluster-kubernetes/[Instructions]
-[source]
-helm install zookeeper bitnami/zookeeper --set replicaCount=3 --set auth.enabled=false --set allowAnonymousLogin=true
-
-
+== Set namespace for prometheus monitoring on K8s
+.monitoring-namespace.yaml
 ----
-** Please be patient while the chart is being deployed **
+include::monitoring-namespace.yaml[]
+----
+== Install Prometheus
+.prometheus.yaml
+----
+include::config-files/prometheus.yml[]
+----
 
-ZooKeeper can be accessed via port 2181 on the following DNS name from within your cluster:
-
-    zookeeper.default.svc.cluster.local
-
-To connect to your ZooKeeper server run the following commands:
-
-    export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=zookeeper,app.kubernetes.io/instance=zookeeper,app.kubernetes.io/component=zookeeper" -o jsonpath="{.items[0].metadata.name}")
-    kubectl exec -it $POD_NAME -- zkCli.sh
-
-To connect to your ZooKeeper server from outside the cluster execute the following commands:
-
-    kubectl port-forward --namespace default svc/zookeeper 2181:2181 &
-    zkCli.sh 127.0.0.1:2181
----
+=== ELK on local machine
+[source]
+D:\elastic\elasticsearch\bin\elasticsearch.bat
 
 [source]
-export ZOOKEEPER-SERVICE-NAME=zookeeper.default.svc.cluster.local
-helm install kafka bitnami/kafka --set zookeeper.enabled=false --set replicaCount=3 --set externalZookeeper.servers=zookeeper.default.svc.cluster.local
-
----
-** Please be patient while the chart is being deployed **
-
-Kafka can be accessed by consumers via port 9092 on the following DNS name from within your cluster:
-
-    kafka.default.svc.cluster.local
-
-Each Kafka broker can be accessed by producers via port 9092 on the following DNS name(s) from within your cluster:
-
-    kafka-0.kafka-headless.default.svc.cluster.local:9092
-    kafka-1.kafka-headless.default.svc.cluster.local:9092
-    kafka-2.kafka-headless.default.svc.cluster.local:9092
-
-To create a pod that you can use as a Kafka client run the following commands:
-
-    kubectl run kafka-client --restart='Never' --image docker.io/bitnami/kafka:2.6.0-debian-10-r78 --namespace default --command -- sleep infinity
-    kubectl exec --tty -i kafka-client --namespace default -- bash
-
-    PRODUCER:
-        kafka-console-producer.sh \
-
-            --broker-list kafka-0.kafka-headless.default.svc.cluster.local:9092,kafka-1.kafka-headless.default.svc.cluster.local:9092,kafka-2.kafka-headless.default.svc.cluster.local:9092 \
-            --topic test
-
-    CONSUMER:
-        kafka-console-consumer.sh \
-
-            --bootstrap-server kafka.default.svc.cluster.local:9092 \
-            --topic test \
-            --from-beginning
-[1]+  Done                    kubectl port-forward --namespace default svc/zookeeper 2181:2181
----
+D:\elastic\kibana\bin\kibana.bat
 
 [source]
-export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=kafka,app.kubernetes.io/instance=kafka,app.kubernetes.io/component=kafka" -o jsonpath="{.items[0].metadata.name}")
+D:\elastic\logstash\bin\logstash.bat -f D:\elastic\logstash\config\logstash.conf
+
+http://localhost:5601/
+
+Kibana->Stack Management->Index Patterns->Create index pattern
