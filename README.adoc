@@ -76,6 +76,24 @@ D:\kafka_2.13-2.6.0\bin\windows\kafka-console-producer --topic example-topic --b
 [source]
 D:\kafka_2.13-2.6.0\bin\windows\kafka-console-consumer --topic example-topic --bootstrap-server 192.168.56.13:29092
 
+==== Helm
+https://github.com/bitnami/charts/blob/master/bitnami/kafka/README.md#accessing-kafka-brokers-from-outside-the-cluster
+[source]
+helm install my-release -f values.yaml bitnami/kafka
+
+NOTE: values.yaml locatee at config-files/helm/values.yaml
+
+===== Test helm installation on windows
+====== Producer
+[source]
+D:\kafka_2.13-2.6.0\bin\windows\kafka-console-producer --topic example-topic --bootstrap-server 192.168.56.10:9094
+
+====== Consumer
+[source]
+D:\kafka_2.13-2.6.0\bin\windows\kafka-console-consumer --topic example-topic --bootstrap-server 192.168.56.10:9094
+
+
+
 == Bitbucket Pipeline
 https://bitbucket.org/arturix/producersb/addon/pipelines/home#!/
 
