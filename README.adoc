@@ -81,7 +81,7 @@ https://github.com/bitnami/charts/blob/master/bitnami/kafka/README.md#accessing-
 [source]
 helm install my-release -f values.yaml bitnami/kafka
 
-NOTE: values.yaml locatee at config-files/helm/values.yaml
+NOTE: values.yaml located at config-files/helm/values.yaml
 
 ===== Test helm installation on windows
 ====== Producer
