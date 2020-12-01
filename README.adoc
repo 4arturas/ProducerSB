@@ -3,7 +3,7 @@ v1.0, 2020-11-14
 :toc:
 :example-caption!:
 :sectnums:
-:sectnumlevels: 7
+:sectnumlevels: 8
 :icons: font
 :source-highlighter: prettify
 
@@ -57,27 +57,33 @@ http://192.168.56.10:8080/
 
 == Kafka
 === Install
-==== Docker
+==== On Docker
 https://kafka-tutorials.confluent.io/kafka-console-consumer-producer-basics/kafka.html
 
-NOTE: Machine address 192.168.56.13
-
-.config-files/kafka/docker-compose.yml
-include::config-files/kafka/docker-compose.yml[]
 [source]
 docker-compose up -d
 
-==== Test on windows
-===== Producer
+NOTE: *docker-compose.yml* is located at config-files/kafka-docker/docker-compose.yml
+
+NOTE: Machine address 192.168.56.13
+
+===== Test docker installation on windows
+====== Producer
 [source]
 D:\kafka_2.13-2.6.0\bin\windows\kafka-console-producer --topic example-topic --bootstrap-server 192.168.56.13:29092
 
-===== Consumer
+====== Consumer
 [source]
 D:\kafka_2.13-2.6.0\bin\windows\kafka-console-consumer --topic example-topic --bootstrap-server 192.168.56.13:29092
 
 ==== Helm
 https://github.com/bitnami/charts/blob/master/bitnami/kafka/README.md#accessing-kafka-brokers-from-outside-the-cluster
+[source]
+helm repo add bitnami https://charts.bitnami.com/bitnami
+
+[source]
+helm install my-release bitnami/kafka
+
 [source]
 helm install my-release -f values.yaml bitnami/kafka
 
@@ -112,6 +118,7 @@ include::monitoring-namespace.yaml[]
 include::config-files/prometheus.yml[]
 ----
 
+== ELK
 === ELK on local machine
 [source]
 D:\elastic\elasticsearch\bin\elasticsearch.bat
@@ -125,3 +132,20 @@ D:\elastic\logstash\bin\logstash.bat -f D:\elastic\logstash\config\logstash.conf
 http://localhost:5601/
 
 Kibana->Stack Management->Index Patterns->Create index pattern
+
+=== ELK using helm
+
+[source]
+helm repo add elastic https://helm.elastic.co
+
+[source]
+helm repo update
+
+[source]
+helm install elastic-operator elastic/eck-operator -n elastic-system --create-namespace
+
+[source]
+kubectl logs -n elastic-system sts/elastic-operator
+
+[source]
+kubectl -n elastic-system get sa
