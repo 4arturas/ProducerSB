@@ -9,7 +9,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      name: log-auto
+      app: log-auto
   template:
     metadata:
       labels:
