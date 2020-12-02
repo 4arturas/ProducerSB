@@ -1,0 +1,157 @@
+kubectl create deployment es-manual --image elasticsearch:7.8.0
+
+kubectl logs –f deployments/es-manual | grep ERROR
+> [2] bootstrap checks failed
+
+###########################
+echo "[TASK 1] Install Elasticsearch Deployment"
+###########################
+cat <<EOF | kubectl apply -f -
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elasticsearch
+spec:
+  selector:
+    matchLabels:
+      component: elasticsearch
+  template:
+    metadata:
+      labels:
+        component: elasticsearch
+    spec:
+      containers:
+        - name: elasticsearch
+          image: elasticsearch:7.8.0
+          env:
+            - name: discovery.type
+              value: single-node
+          ports:
+            - containerPort: 9200
+              name: http
+              protocol: TCP
+EOF
+###########################
+echo "[TASK 2] Install Elasticsearch Service"
+###########################
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch
+  labels:
+    component: elasticsearch
+spec:
+  #type: LoadBalancer
+  type: NodePort
+  selector:
+    component: elasticsearch
+  ports:
+    - name: http
+      port: 9200
+      targetPort: 9200
+      protocol: TCP
+      nodePort: 32323
+EOF
+###########################
+http://192.168.56.10:32323/
+http://192.168.56.11:32323/
+
+###########################
+echo "[TASK 3] Install Kibana Service"
+###########################
+
+kubectl create deployment kib --image kibana:7.8.0
+kubectl expose deployment kib --type NodePort --port 5601
+#change nodePort
+kubectl edit svc kib
+
+###########################
+logstash
+###########################
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-configmap
+data:
+  logstash.yml: |
+    http.host: "0.0.0.0"
+    path.config: /usr/share/logstash/pipeline
+  logstash.conf: |
+    input {
+        tcp {
+            port => "32325"
+            codec => json_lines
+        }
+    }
+    output {
+        stdout {}
+    	elasticsearch {
+    		hosts => ["http://192.168.56.10:32323"]
+    		index => "producer-elk-tcp-%{+YYYY.MM.dd}"
+      }
+    }
+EOF
+###########################
+cat <<EOF | kubectl apply -f -
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logstash-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logstash
+  template:
+    metadata:
+      labels:
+        app: logstash
+    spec:
+      containers:
+        - name: logstash
+          image: logstash:7.8.0
+          ports:
+            - containerPort: 5044
+          volumeMounts:
+            - name: config-volume
+              mountPath: /usr/share/logstash/config
+            - name: logstash-pipeline-volume
+              mountPath: /usr/share/logstash/pipeline
+      volumes:
+        - name: config-volume
+          configMap:
+            name: logstash-configmap
+            items:
+              - key: logstash.yml
+                path: logstash.yml
+        - name: logstash-pipeline-volume
+          configMap:
+            name: logstash-configmap
+            items:
+              - key: logstash.conf
+                path: logstash.conf
+EOF
+###########################
+cat <<EOF | kubectl apply -f -
+kind: Service
+apiVersion: v1
+metadata:
+  name: logstash-service
+spec:
+  selector:
+    app: logstash
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 5044
+      targetPort: 5044
+      nodePort: 32325
+EOF
+###########################
+Tada atsiras sitas
+http://192.168.56.10:32323/_cat/indices
+
+https://jamesdefabia.github.io/docs/user-guide/kubectl/kubectl_edit/
+
