@@ -13,7 +13,7 @@ spec:
   template:
     metadata:
       labels:
-        name: app-auto
+        app: app-auto
     spec:
       containers:
         - name: app-auto

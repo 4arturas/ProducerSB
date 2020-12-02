@@ -13,7 +13,7 @@ spec:
   template:
     metadata:
       labels:
-        name: log-auto
+        app: log-auto
     spec:
       containers:
         - name: log-auto

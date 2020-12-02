@@ -4,16 +4,16 @@ kind: Deployment
 metadata:
   name: es-auto
   labels:
-    name: es-auto
+    app: es-auto
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: es-auto
+      app: es-auto
   template:
     metadata:
       labels:
-        name: es-auto
+        app: es-auto
     spec:
       containers:
         - name: es-auto
