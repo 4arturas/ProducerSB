@@ -17,25 +17,25 @@ spec:
     spec:
       containers:
         - name: log-auto
-            image: logstash:7.8.0
-            ports:
-              - containerPort: 5044
-                name: filebeat
-            env:
-              - name: ELASTICSEARCH_HOSTS
-                value: http://{{ .Values.global.hostIp }}:{{ .Values.ports.elasticsearch }}
-            volumeMounts:
-              - name: log-auto-pipeline
-                mountPath: /usr/share/logstash/pipeline/
-            command:
-              - logstash
+          image: logstash:7.8.0
+          ports:
+            - containerPort: 5044
+              name: filebeat
+          env:
+            - name: ELASTICSEARCH_HOSTS
+              value: http://{{ .Values.global.hostIp }}:{{ .Values.ports.elasticsearch }}
+          volumeMounts:
+            - name: log-auto-pipeline
+              mountPath: /usr/share/logstash/pipeline/
+          command:
+            - logstash
       volumes:
         - name: log-auto-pipeline
-            configMap:
-              name: log-auto-pipeline
-              items:
-                - key: logstash.conf
-                  path: logstash.conf
+          configMap:
+            name: log-auto-pipeline
+            items:
+            - key: logstash.conf
+              path: logstash.conf
 ---
 apiVersion: v1
 kind: ConfigMap

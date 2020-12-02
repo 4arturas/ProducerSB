@@ -17,13 +17,13 @@ spec:
     spec:
       containers:
         - name: es-auto
-            image: elasticsearch:7.8.0
-            ports:
-              - containerPort: 9200
-                  name: http
-            env:
-              - name: discovery.type
-                  value: single-node
+          image: elasticsearch:7.8.0
+          ports:
+            - containerPort: 9200
+              name: http
+          env:
+            - name: discovery.type
+              value: single-node
 ---
 apiVersion: v1
 kind: Service
