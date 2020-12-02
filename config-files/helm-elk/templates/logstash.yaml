@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: log-auto
   labels:
-    name: log-auto
+    app: log-auto
 spec:
   replicas: 1
   selector:

@@ -1,9 +1,10 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app-auto
   labels:
-    name: app-auto
+    app: app-auto
 spec:
   replicas: 1
   selector:
