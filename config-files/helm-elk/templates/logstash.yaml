@@ -20,10 +20,9 @@ spec:
           image: logstash:7.8.0
           ports:
             - containerPort: 5044
-              name: filebeat
           env:
             - name: ELASTICSEARCH_HOSTS
-              value: {{ .Values.global.hostIp }}:{{ .Values.ports.elasticsearch }}
+              value: http://{{ .Values.global.hostIp }}:{{ .Values.ports.elasticsearch }}
           volumeMounts:
             - name: log-auto-pipeline
               mountPath: /usr/share/logstash/pipeline/
