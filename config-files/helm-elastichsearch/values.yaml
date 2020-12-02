@@ -320,14 +320,14 @@ master:
       - ReadWriteOnce
     ## Persistent Volume size
     ##
-    size: 1Gi
+    size: 8Gi
 
   ## Service parameters for master-eligible node(s)
   ##
   service:
     ## master-eligible service type
     ##
-    type: NodePort
+    type: ClusterIP
     ## Elasticsearch transport port
     ##
     port: 9300
@@ -335,7 +335,6 @@ master:
     ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
     ##
     # nodePort:
-    nodePort: 32323
     ## Provide any additional annotations which may be required. This can be used to
     ## set the LoadBalancer service type to internal only.
     ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
@@ -581,7 +580,7 @@ data:
     #   memory: 2176Mi
     requests:
       cpu: 25m
-      memory: 1024Mi
+      memory: 2048Mi
   ## Elasticsearch data container's liveness and readiness probes
   ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
   ##
@@ -633,7 +632,7 @@ data:
       - ReadWriteOnce
     ## Persistent Volume size
     ##
-    size: 1Gi
+    size: 8Gi
   ## Provide functionality to use RBAC
   ##
   serviceAccount:
