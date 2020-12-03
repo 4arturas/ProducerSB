@@ -36,5 +36,5 @@ spec:
   ports:
     - port: 9200
       targetPort: 9200
-      nodePort: 31996
+      nodePort: {{ .Values.ports.elasticsearch }}
       protocol: TCP
