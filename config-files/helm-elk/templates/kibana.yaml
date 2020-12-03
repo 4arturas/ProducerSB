@@ -36,5 +36,5 @@ spec:
   ports:
     - port: 5601
       targetPort: 5601
-      nodePort: 31997
+      nodePort:  {{ .Values.ports.kibana }}
       protocol: TCP
