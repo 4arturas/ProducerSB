@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: log-auto-pipeline
 data:
-  logstash.conf: |
+  logstash.conf: |-
   input {
       tcp {
       port => "5000"
