@@ -10,7 +10,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: log-auto
+  name: log-auto-dep
   labels:
     app: log-auto
 spec:
@@ -48,7 +48,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: log-auto
+  name: log-auto-svc-ext
 spec:
   selector:
     app: log-auto
