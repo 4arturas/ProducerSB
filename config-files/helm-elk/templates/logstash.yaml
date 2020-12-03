@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: log-auto-dep
+  name: log-auto
   labels:
     app: log-auto
 spec:
