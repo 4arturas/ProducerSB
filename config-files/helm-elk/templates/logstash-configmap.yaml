@@ -14,7 +14,7 @@ data:
     output {
       stdout {}
       elasticsearch {
-        hosts => ["http://{{ .Values.global.hostIp }}:9200"]
+        hosts => ["http://{{ .Values.global.hostIp }}:31996"]
         index => "producer-elk-tcp-%{+YYYY.MM.dd}"
       }
     }
