@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kib-auto
+  name: kib-auto-dep
   labels:
     app: kib-auto
 spec:
@@ -19,8 +19,8 @@ spec:
         - name: kib-auto
           image: kibana:7.8.0
           ports:
-            - containerPort: 5601
-              name: http
+            - name: http
+              containerPort: 5601
           env:
             - name: ELASTICSEARCH_HOSTS
               value: http://{{ .Values.global.hostIp }}:{{ .Values.ports.elasticsearch }}
@@ -28,15 +28,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: kib-auto
-  labels:
-    name: kib-auto
+  name: kib-auto-ext-svc
 spec:
   selector:
-    name: kib-auto
-  type: NodePort
+    app: kib-auto
+  type: LoadBalancer
   ports:
-    - nodePort: {{ .Values.ports.kibana }}
-      port: 5601
-      protocol: TCP
+    - port: 5601
       targetPort: 5601
+      nodePort: 31997
+      protocol: TCP

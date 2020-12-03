@@ -19,8 +19,8 @@ spec:
         - name: es-auto
           image: elasticsearch:7.8.0
           ports:
-            - containerPort: 9200
-              name: http
+            - name: http
+              containerPort: 9200
           env:
             - name: discovery.type
               value: single-node
