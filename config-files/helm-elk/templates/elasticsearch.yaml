@@ -28,15 +28,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    name: es-auto
   name: es-auto
 spec:
   selector:
-    name: es-auto
-  type: NodePort
+    app: es-auto
+  type: LoadBalancer
   ports:
-    - nodePort: {{ .Values.ports.elasticsearch }}
-      port: 9200
-      protocol: TCP
+    - port: 9200
       targetPort: 9200
+      nodePort: 31996
+      protocol: TCP
