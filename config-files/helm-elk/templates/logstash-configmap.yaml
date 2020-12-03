@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: logstash-config
+  name: log-auto-pipeline
 data:
   logstash.conf: |-
     input {
