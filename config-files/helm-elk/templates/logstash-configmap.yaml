@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: log-auto-pipeline
+data:
+  logstash.conf: |
+  {{ .Files.Get "logstash.conf" | indent 4 }}
