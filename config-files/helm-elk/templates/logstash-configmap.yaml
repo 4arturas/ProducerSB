@@ -39,7 +39,7 @@ data:
       # You can uncomment this line to investigate the generated events by the logstash.
       # stdout { codec => rubydebug }
       elasticsearch {
-          hosts => "elasticsearch:9200"
+          hosts => "192.168.56.10:31996"
           template_overwrite => false
           manage_template => false
           # The events will be stored in elasticsearch under previously defined index_prefix value.
