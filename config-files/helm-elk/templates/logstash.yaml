@@ -23,7 +23,7 @@ spec:
               containerPort: 5044
           env:
             - name: ELASTICSEARCH_HOSTS
-              value: http://{{ .Values.global.hostIp }}:{{ .Values.ports.elasticsearch }}
+              value: http://192.168.56.10:31996
           volumeMounts:
             - name: log-auto-pipeline
               mountPath: /usr/share/logstash/pipeline/
