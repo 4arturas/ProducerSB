@@ -6,7 +6,7 @@ data:
   logstash.conf: |-
     input {
       tcp {
-          port => "5000"
+          port => "{{ .Values.ports.elasticsearch }}"
           codec => json_lines
       }
     }
