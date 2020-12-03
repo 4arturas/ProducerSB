@@ -1,5 +1,5 @@
 global:
-  hostIp: 127.0.0.1
+  hostIp: 192.168.56.10
 
 ports:
   elasticsearch: 31996
