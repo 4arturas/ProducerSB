@@ -4,4 +4,16 @@ metadata:
   name: log-auto-pipeline
 data:
   logstash.conf: |
-  {{ .Files.Get "logstash.conf" | indent 4 }}
+  input {
+      tcp {
+      port => "5000"
+      codec => json_lines
+    }
+  }
+  output {
+    stdout {}
+    elasticsearch {
+      hosts => ["http://localhost:9200"]
+      index => "producer-elk-tcp-%{+YYYY.MM.dd}"
+    }
+  }
