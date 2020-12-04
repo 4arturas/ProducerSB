@@ -2,21 +2,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: log-auto
+  name: log-app
   labels:
-    app: log-auto
+    app: log-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: log-auto
+      app: log-app
   template:
     metadata:
       labels:
-        app: log-auto
+        app: log-app
     spec:
       containers:
-        - name: log-auto
+        - name: log-app
           image: docker.elastic.co/logstash/logstash:7.10.0
           ports:
             - name: filebeat
@@ -25,14 +25,14 @@ spec:
             - name: ELASTICSEARCH_HOSTS
               value: http://{{ .Values.global.hostIp }}:{{ .Values.ports.elasticsearch }}
           volumeMounts:
-            - name: log-auto-pipeline
+            - name: log-app-pipeline
               mountPath: /usr/share/logstash/pipeline/
           command:
             - logstash
       volumes:
-        - name: log-auto-pipeline
+        - name: log-app-pipeline
           configMap:
-            name: log-auto-pipeline
+            name: log-app-pipeline
             items:
             - key: logstash.conf
               path: logstash.conf
@@ -40,10 +40,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: log-auto-svc-ext
+  name: log-app-svc-ext
 spec:
   selector:
-    app: log-auto
+    app: log-app
   type: NodePort
   ports:
     - port: 5044
