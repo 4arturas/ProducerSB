@@ -21,10 +21,10 @@
         </encoder>
     </appender>
 
-<!--
     <appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>localhost:5000</destination>
-        &lt;!&ndash; encoder is required &ndash;&gt;
+<!--        <destination>localhost:5000</destination>-->
+        <destination>192.168.56.10:31998</destination>
+        <!-- encoder is required -->
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
         <keepAliveDuration>5 minutes</keepAliveDuration>
     </appender>
@@ -33,10 +33,9 @@
     <logger name="org.hibernate" level="TRACE">
         <appender-ref ref="STASH"/>
     </logger>
--->
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
-<!--        <appender-ref ref="STASH"/>-->
+        <appender-ref ref="STASH"/>
 <!--        <appender-ref ref="FILE"/>-->
     </root>
 </configuration>
