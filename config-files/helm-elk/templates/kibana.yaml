@@ -32,7 +32,7 @@ metadata:
 spec:
   selector:
     app: kib-auto
-  type: LoadBalancer
+  type: NodePort
   ports:
     - port: 5601
       targetPort: 5601
