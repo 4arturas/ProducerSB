@@ -21,6 +21,9 @@ spec:
           ports:
             - name: http
               containerPort: 9200
+          env:
+            - name: discovery.type
+              value: single-node
 ---
 apiVersion: v1
 kind: Service
@@ -29,7 +32,7 @@ metadata:
 spec:
   selector:
     app: es-auto
-  type: LoadBalancer
+  type: NodePort
   ports:
     - port: 9200
       targetPort: 9200
