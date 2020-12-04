@@ -23,7 +23,7 @@ spec:
               containerPort: 5044
           env:
             - name: ELASTICSEARCH_HOSTS
-              value: http://{{ .Values.global.hostIp }}:{{ .Values.ports.elasticsearch }}
+              value: bababa
           volumeMounts:
             - name: log-auto-pipeline
               mountPath: /usr/share/logstash/pipeline/
@@ -36,3 +36,16 @@ spec:
             items:
             - key: logstash.conf
               path: logstash.conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: log-auto-svc-ext
+spec:
+  selector:
+    app: log-auto
+  type: NodePort
+  ports:
+    - port: 5044
+      protocol: TCP
+      targetPort: 5044
