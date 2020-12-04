@@ -2,21 +2,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kib-auto-dep
+  name: kib-app-dep
   labels:
-    app: kib-auto
+    app: kib-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kib-auto
+      app: kib-app
   template:
     metadata:
       labels:
-        app: kib-auto
+        app: kib-app
     spec:
       containers:
-        - name: kib-auto
+        - name: kib-app
           image: docker.elastic.co/kibana/kibana:7.10.0
           ports:
             - name: http
@@ -28,10 +28,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: kib-auto-ext-svc
+  name: kib-app-svc-ext
 spec:
   selector:
-    app: kib-auto
+    app: kib-app
   type: NodePort
   ports:
     - port: 5601
