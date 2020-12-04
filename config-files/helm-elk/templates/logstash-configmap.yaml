@@ -17,7 +17,7 @@ data:
     output {
       stdout {}
       elasticsearch {
-        hosts => "192.168.56.10:31996"
+        hosts => "192.168.56.11:31996"
         index => "producer-elk-tcp-%{+YYYY.MM.dd}"
       }
     }
