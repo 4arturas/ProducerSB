@@ -36,16 +36,3 @@ spec:
             items:
             - key: logstash.conf
               path: logstash.conf
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: log-auto-svc-ext
-spec:
-  selector:
-    app: log-auto
-  type: NodePort
-  ports:
-    - port: 5044
-      protocol: TCP
-      targetPort: 5044
