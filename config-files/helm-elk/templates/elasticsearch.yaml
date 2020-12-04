@@ -2,21 +2,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: es-auto
+  name: es-app-dep
   labels:
-    app: es-auto
+    app: es-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: es-auto
+      app: es-app
   template:
     metadata:
       labels:
-        app: es-auto
+        app: es-app
     spec:
       containers:
-        - name: es-auto
+        - name: es-app
           image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
           ports:
             - name: http
@@ -28,10 +28,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: es-auto
+  name: es-app-svc-ext
 spec:
   selector:
-    app: es-auto
+    app: es-app
   type: NodePort
   ports:
     - port: 9200
