@@ -3,6 +3,9 @@ kind: ConfigMap
 metadata:
   name: log-auto-pipeline
 data:
+  logstash.yml: |
+    http.host: "0.0.0.0"
+    path.config: /usr/share/logstash/pipeline
   logstash.conf: |-
     input {
       tcp {
