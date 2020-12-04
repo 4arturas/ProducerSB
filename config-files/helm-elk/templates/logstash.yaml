@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: log-auto
-          image: logstash:7.10.0
+          image: docker.elastic.co/logstash/logstash:7.10.0
           ports:
             - name: filebeat
               containerPort: 5044
