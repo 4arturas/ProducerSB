@@ -23,7 +23,7 @@
 
     <appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
 <!--        <destination>localhost:5000</destination>-->
-        <destination>192.168.56.10:31998</destination>
+        <destination>192.168.56.10:30003</destination>
         <!-- encoder is required -->
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
         <keepAliveDuration>5 minutes</keepAliveDuration>
