@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: es-auto
-          image: elasticsearch:7.8.0
+          image: elasticsearch:7.10.0
           ports:
             - name: http
               containerPort: 9200
