@@ -115,7 +115,7 @@ include::monitoring-namespace.yaml[]
 == Install Prometheus
 .prometheus.yaml
 ----
-include::config-files/prometheus.yml[]
+include::config-files/helm-prometheus/prometheus.yml[]
 ----
 
 == ELK
