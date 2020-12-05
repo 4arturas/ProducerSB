@@ -136,16 +136,5 @@ Kibana->Stack Management->Index Patterns->Create index pattern
 === ELK using helm
 
 [source]
-helm repo add elastic https://helm.elastic.co
-
-[source]
-helm repo update
-
-[source]
-helm install elastic-operator elastic/eck-operator -n elastic-system --create-namespace
-
-[source]
-kubectl logs -n elastic-system sts/elastic-operator
-
-[source]
-kubectl -n elastic-system get sa
+cd config-files/helm-elk
+helm install elk .
