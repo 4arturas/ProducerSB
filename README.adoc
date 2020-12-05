@@ -67,6 +67,8 @@ NOTE: *docker-compose.yml* is located at config-files/kafka-docker/docker-compos
 
 NOTE: Machine address 192.168.56.13
 
+==== On Kubernetes
+
 ===== Test docker installation on windows
 ====== Producer
 [source]
