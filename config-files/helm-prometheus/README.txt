@@ -5,7 +5,9 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 
 helm search repo prometheus
 
-helm install prometheus prometheus-community/prometheus
+helm install prometheus prometheus-community/prometheus -f values.yaml
+
+helm install -f myvalues.yaml
 
 # create service
 kubectl expose service prometheus-server --type=NodePort --target-port=9090 --name=prometheus-server-svc
