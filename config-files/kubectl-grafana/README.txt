@@ -27,3 +27,5 @@ EOF
 
 # grafana credentials
 admin:admin
+
+https://grafana.com/grafana/dashboards
