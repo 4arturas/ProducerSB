@@ -31,10 +31,15 @@ metadata:
 spec:
   selector:
     app: producer-app
-  type: LoadBalancer
+  type: NodePort
   ports:
     - name: web
       port: 8080
       targetPort: 8080
       nodePort: {{ .Values.ports.producer }}
+      protocol: TCP
+    - name: debug
+      port: 5005
+      targetPort: 5005
+      nodePort: 30020
       protocol: TCP
