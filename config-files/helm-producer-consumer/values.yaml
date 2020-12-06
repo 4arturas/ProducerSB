@@ -1,0 +1,6 @@
+global:
+  hostIp: 192.168.56.10
+
+ports:
+  producer: 30007
+  consumer: 30008
