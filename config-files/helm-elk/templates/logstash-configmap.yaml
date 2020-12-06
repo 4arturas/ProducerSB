@@ -13,11 +13,23 @@ data:
           codec => json_lines
       }
     }
-
+    filter {
+      grok {
+        match => { "message" => "%{DATESTAMP:timestamp}%{SPACE}%{NOTSPACE:selco}%{SPACE}%{NOTSPACE:selco}%{SPACE}%{WORD:severity}%{SPACE}%{JAVACLASS:clazz}%{SPACE}%{GREEDYDATA:logmsg}" }
+      }
+    }
     output {
       stdout {}
       elasticsearch {
         hosts => ["${ELASTICSEARCH_HOSTS}"]
         index => "producer-elk-tcp-%{+YYYY.MM.dd}"
+      }
+    }
+
+    output {
+      stdout {}
+      elasticsearch {
+        hosts => ["${ELASTICSEARCH_HOSTS}"]
+        index => "consumer-elk-tcp-%{+YYYY.MM.dd}"
       }
     }
