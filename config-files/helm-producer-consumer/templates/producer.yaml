@@ -20,6 +20,9 @@ spec:
           image: arturix/producersb:latest
           ports:
             - containerPort: 80
+          env:
+            - name: JAVA_OPTS
+              value: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
 ---
 apiVersion: v1
 kind: Service
@@ -34,9 +37,4 @@ spec:
       port: 8080
       targetPort: 8080
       nodePort: {{ .Values.ports.producer }}
-      protocol: TCP
-    - name: debug
-      port: 5005
-      targetPort: 5005
-      nodePort: 30020
       protocol: TCP
