@@ -18,18 +18,19 @@ data:
         match => { "message" => "%{DATESTAMP:timestamp}%{SPACE}%{NOTSPACE:selco}%{SPACE}%{NOTSPACE:selco}%{SPACE}%{WORD:severity}%{SPACE}%{JAVACLASS:clazz}%{SPACE}%{GREEDYDATA:logmsg}" }
       }
     }
-    output {
-      stdout {}
-      elasticsearch {
-        hosts => ["${ELASTICSEARCH_HOSTS}"]
-        index => "producer-elk-tcp-%{+YYYY.MM.dd}"
-      }
-    }
 
     output {
       stdout {}
-      elasticsearch {
-        hosts => ["${ELASTICSEARCH_HOSTS}"]
-        index => "consumer-elk-tcp-%{+YYYY.MM.dd}"
+      if [logger_name] == "com.isignthis.producer.controllers.ProduceController" {
+        elasticsearch {
+          hosts => ["${ELASTICSEARCH_HOSTS}"]
+          index => "producer-elk-tcp-%{+YYYY.MM.dd}"
+        }
+      }
+      else if [logger_name] == "com.isignthis.consumer.controller.KafkaConsumerController" {
+        elasticsearch {
+          hosts => ["${ELASTICSEARCH_HOSTS}"]
+          index => "consumer-elk-tcp-%{+YYYY.MM.dd}"
+        }
       }
     }
