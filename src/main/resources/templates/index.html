@@ -31,7 +31,7 @@
             divMsg.className = 'msgStyle';
             divMsg.innerHTML = '#' + (g_nMsgNr++) + ' - SpringBoot received message = <b>\"' + response.data + '\"</b> and send it to Kafka';
             msgProducer.appendChild( divMsg );
-            setTimeout(
+            /*setTimeout(
                 function()
                 {
                     var span = document.createElement('span');
@@ -43,18 +43,24 @@
                 function()
                 {
                     divMsg.parentNode.removeChild( divMsg );
-                }, 4000 );
+                }, 4000 );*/
         })
         .catch(function (error)
         {
             console.log(error);
         });
     }
+    function clear_Messages()
+    {
+        var divMsg = document.createElement('div');
+        while ( divMsg.firstChild )
+            divMsg.removeChild( divMsg.firstChild );
+    }
 
 </script>
 
 <input id="inputProducer" type="text" value="Message for Consumer">
-<button id="buttonProducer" onclick="produce();">Produce</button>
+<button id="buttonProducer" onclick="produce();">Produce</button><button id="buttonClearMesssages" onclick="clear_Messages();">Delete messages</button>
 <div id="msgProducer" style="margin: 20px 0 0 20px"></div>
 </body>
 
