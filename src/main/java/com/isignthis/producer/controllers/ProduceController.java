@@ -23,7 +23,7 @@ public class ProduceController
 
     void sendMesageSimpleIplementation( final String msg )
     {
-        log.info(msg);
+        log.info("Producer sending message to Kafka - " + msg);
         kafkaTemplate.send( topicExample, msg );
     }
 
