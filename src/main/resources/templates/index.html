@@ -5,18 +5,11 @@
     <title>Producer</title>
     <meta charset="utf-8" content="text/html">
     <script src="https://unpkg.com/axios/dist/axios.min.js" type="text/javascript"></script>
-    <style type="text/css">
-        .msgStyle {
-            margin-bottom: 5px;
-            font-size: 20px;
-        }
-    </style>
 </head>
 
 <body>
 <h1>Producer v.1.0.0</h1>
 <script type="text/javascript">
-    var g_nMsgNr = 1;
     function produce()
     {
         var inputProducer = document.getElementById('inputProducer');
@@ -26,11 +19,7 @@
         })
         .then(function (response)
         {
-            var msgProducer = document.getElementById('msgProducer');
-            var divMsg = document.createElement('div');
-            divMsg.className = 'msgStyle';
-            divMsg.innerHTML = '#' + (g_nMsgNr++) + ' - SpringBoot received message = <b>\"' + response.data + '\"</b> and send it to Kafka';
-            msgProducer.appendChild( divMsg );
+            ws_PringMsgFromBackend( response.data );
             /*setTimeout(
                 function()
                 {
@@ -50,18 +39,26 @@
             console.log(error);
         });
     }
+    var g_nMsgNr = 1;
+    function ws_PringMsgFromBackend( msg )
+    {
+        var msgDiv = document.getElementById('msgDiv');
+        var div = document.createElement('div');
+        div.innerHTML = '#' + (g_nMsgNr++) + ' - <b>' + msg + '</b>';
+        msgDiv.appendChild( div );
+    }
     function clear_Messages()
     {
-        var divMsg = document.createElement('div');
-        while ( divMsg.firstChild )
-            divMsg.removeChild( divMsg.firstChild );
+        var msgDiv = document.getElementById('msgDiv');
+        while ( msgDiv.firstChild )
+            msgDiv.removeChild( msgDiv.firstChild );
     }
 
 </script>
 
 <input id="inputProducer" type="text" value="Message for Consumer">
-<button id="buttonProducer" onclick="produce();">Produce</button><button id="buttonClearMesssages" onclick="clear_Messages();">Delete messages</button>
-<div id="msgProducer" style="margin: 20px 0 0 20px"></div>
+<button id="buttonProducer" onclick="produce();">Produce</button><button id="buttonClearMesssages" onclick="clear_Messages();">Clear messages</button>
+<div id="msgDiv" style="margin: 20px 0 0 20px"></div>
 </body>
 
 </html>
